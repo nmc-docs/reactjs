@@ -62,7 +62,8 @@ npm install -D vite-tsconfig-paths vite-plugin-checker vite-plugin-svgr
     "baseUrl": ".",
     "paths": {
       "src/*": ["./src/*"]
-    }
+    },
+    "types": ["vite-plugin-svgr/client"]
   },
   "include": ["src"],
   "exclude": ["node_modules"],
@@ -105,7 +106,7 @@ npm install -D vite-tsconfig-paths vite-plugin-checker vite-plugin-svgr
     "typescript": "^5.0.2",
     "vite": "^4.4.5",
     "vite-plugin-checker": "^0.6.1",
-    "vite-plugin-svgr": "^3.2.0",
+    "vite-plugin-svgr": "^4.1.0",
     "vite-tsconfig-paths": "^4.2.0"
   }
 }
@@ -121,12 +122,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import svgr from "vite-plugin-svgr";
 
 export default defineConfig({
-  plugins: [
-    svgr({ exportAsDefault: true }),
-    react(),
-    checker({ typescript: true }),
-    tsconfigPaths(),
-  ],
+  plugins: [svgr(), react(), checker({ typescript: true }), tsconfigPaths()],
   server: {
     port: 3000,
   },
