@@ -127,7 +127,7 @@ export default defineConfig({
 });
 ```
 
-:::note
+## Sử dụng component svg trong Vite
 
 - Để có thể sử dụng các file `.svg` như một component, sau đường dẫn import, ta thêm `?react`, ví dụ:
 
@@ -137,7 +137,19 @@ import ReactIcon from "./reactjs.svg?react";
 export { ReactIcon };
 ```
 
-:::
+## Sử dụng biến môi trường (environment variables) trong Vite
+
+- Để sử dụng biến môi trường trong Vite, đầu tiên hãy tạo một file `env.development` và khai báo các biến môi trường tại file này, lưu ý, tên biến phải bắt đầu bởi tiền tố **VITE\_**, ví dụ:
+
+```env title=".env.development"
+VITE_API_URL=localhost:8080
+```
+
+- Sau đó, để sử dụng biến môi trường này, ta sử dụng cú pháp:
+
+```ts
+import.meta.env.VITE_API_URL;
+```
 
 ## Chạy, build dự án
 
