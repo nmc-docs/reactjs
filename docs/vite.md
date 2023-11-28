@@ -6,23 +6,21 @@ sidebar_position: 4
 
 ## Khởi tạo Vite
 
-- Mở terminal và gõ lệnh:
+- Mở terminal trong thư mục dự án và gõ lệnh:
 
 ```bash
-npm create vite@latest
+npm create vite@latest .
 ```
 
 - Chọn yêu cầu theo dưới đây:
 
-  - Project name: **client**
-  - Package name: **client** (thường trùng với tên project)
   - Select a framework: **React**
   - Select a variant: **TypeScript + SWC**
 
-- Trỏ đến thư mục Vite vừa tạo và cài đặt các thư viện được gợi ý:
+- Cài đặt các thư viện:
 
 ```bash
-cd client && npm install
+npm install
 ```
 
 ## Cài đặt thêm các thư viện cần thiết
@@ -86,7 +84,7 @@ npm install -D vite-tsconfig-paths vite-plugin-checker vite-plugin-svgr
 
 ```json title="package.json"
 {
-  "name": "client",
+  "name": "react-vite",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -100,14 +98,14 @@ npm install -D vite-tsconfig-paths vite-plugin-checker vite-plugin-svgr
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.15",
-    "@types/react-dom": "^18.2.7",
-    "@vitejs/plugin-react-swc": "^3.3.2",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.5",
-    "vite-plugin-checker": "^0.6.1",
-    "vite-plugin-svgr": "^4.1.0",
-    "vite-tsconfig-paths": "^4.2.0"
+    "@types/react": "^18.2.39",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "typescript": "^5.3.2",
+    "vite": "^5.0.2",
+    "vite-plugin-checker": "^0.6.2",
+    "vite-plugin-svgr": "^4.2.0",
+    "vite-tsconfig-paths": "^4.2.1"
   }
 }
 ```
@@ -128,6 +126,18 @@ export default defineConfig({
   },
 });
 ```
+
+:::note
+
+- Để có thể sử dụng các file `.svg` như một component, sau đường dẫn import, ta thêm `?react`, ví dụ:
+
+```ts
+import ReactIcon from "./reactjs.svg?react";
+
+export { ReactIcon };
+```
+
+:::
 
 ## Chạy, build dự án
 
