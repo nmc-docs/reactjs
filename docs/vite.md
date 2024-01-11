@@ -1,5 +1,5 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Tạo dự án Reactjs với Vite
@@ -39,7 +39,7 @@ npm install -D vite-tsconfig-paths vite-plugin-checker vite-plugin-svgr
 
 ## Cấu hình lại cho một số file
 
-```json title="tsconfig.json"
+```json
 {
   "compilerOptions": {
     "strict": true,
@@ -69,7 +69,7 @@ npm install -D vite-tsconfig-paths vite-plugin-checker vite-plugin-svgr
 }
 ```
 
-```json title="tsconfig.node.json"
+```json
 {
   "compilerOptions": {
     "composite": true,
@@ -82,7 +82,7 @@ npm install -D vite-tsconfig-paths vite-plugin-checker vite-plugin-svgr
 }
 ```
 
-```json title="package.json"
+```json
 {
   "name": "react-vite",
   "private": true,
@@ -112,7 +112,7 @@ npm install -D vite-tsconfig-paths vite-plugin-checker vite-plugin-svgr
 
 ## Cấu hình thêm cho Vite
 
-```ts title="vite.config.ts"
+```ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import checker from "vite-plugin-checker";
@@ -141,7 +141,7 @@ export { ReactIcon };
 
 - Để sử dụng biến môi trường trong Vite, đầu tiên hãy tạo một file `env.development` và khai báo các biến môi trường tại file này, lưu ý, tên biến phải bắt đầu bởi tiền tố **VITE\_**, ví dụ:
 
-```env title=".env.development"
+```env
 VITE_API_URL=localhost:8080
 ```
 
