@@ -43,7 +43,7 @@ npm install -D vite-tsconfig-paths vite-plugin-checker vite-plugin-svgr
 
 ## Cấu hình lại cho một số file
 
-```json title="tsconfig.json"
+```json title="tsconfig.app.json"
 {
   "compilerOptions": {
     "strict": true,
