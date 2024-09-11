@@ -37,52 +37,45 @@ npm install -D vite-tsconfig-paths vite-plugin-checker vite-plugin-svgr
 
 :::
 
+## Cài đặt ESLint + Prettier + Lint staged
+
+- Xem cách cài đặt: [tại đây](https://nmc-docs.github.io/eslint-prettier/setting/react-vite-setup)
+
 ## Cấu hình lại cho một số file
 
-```json
+```json title="tsconfig.json"
 {
   "compilerOptions": {
     "strict": true,
-    "target": "ESNext",
+    "target": "ES2020",
     "module": "ESNext",
     "outDir": "dist",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "importHelpers": true,
     "skipLibCheck": true,
+    "allowJs": true,
     "removeComments": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "noUncheckedIndexedAccess": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "noEmit": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
       "src/*": ["./src/*"]
-    },
-    "types": ["vite-plugin-svgr/client"]
+    }
   },
   "include": ["src"],
-  "exclude": ["node_modules"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "exclude": ["node_modules"]
 }
 ```
 
-```json
-{
-  "compilerOptions": {
-    "composite": true,
-    "skipLibCheck": true,
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true
-  },
-  "include": ["vite.config.ts"]
-}
-```
-
-```json
+```json title="package.json"
 {
   "name": "react-vite",
   "private": true,
@@ -90,29 +83,49 @@ npm install -D vite-tsconfig-paths vite-plugin-checker vite-plugin-svgr
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc -b && vite build",
+    "lint": "eslint --fix .",
+    "format": "prettier --write .",
     "preview": "vite preview"
   },
+  "lint-staged": {
+    "*.{ts,tsx,js,css,scss}": [
+      "prettier --write .",
+      "eslint --fix .",
+      "git add ."
+    ]
+  },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/react": "^18.2.39",
-    "@types/react-dom": "^18.2.17",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.5.0",
+    "@typescript-eslint/parser": "^8.5.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
-    "typescript": "^5.3.2",
-    "vite": "^5.0.2",
-    "vite-plugin-checker": "^0.6.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.3",
+    "eslint-plugin-import": "^2.30.0",
+    "eslint-plugin-jsx-a11y": "^6.10.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.35.2",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1",
+    "vite-plugin-checker": "^0.8.0",
     "vite-plugin-svgr": "^4.2.0",
-    "vite-tsconfig-paths": "^4.2.1"
+    "vite-tsconfig-paths": "^5.0.1"
   }
 }
 ```
 
-## Cấu hình thêm cho Vite
-
-```ts
+```ts title="vite.config.ts"
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import checker from "vite-plugin-checker";
@@ -136,6 +149,40 @@ import ReactIcon from "./reactjs.svg?react";
 
 export { ReactIcon };
 ```
+
+- Sau đó, ta tạo file `svgr.d.ts`:
+
+```ts title="src/types/svgr.d.ts"
+declare module "*.svg?react" {
+  import { FC, SVGProps } from "react";
+
+  const content: FC<SVGProps<SVGElement>>;
+  export default content;
+}
+```
+
+- Bây giờ, ta có thể sử dụng SVG như một component, ví dụ:
+
+```tsx title="App.tsx"
+import { useState } from "react";
+
+import { ReactIcon } from "src/assets";
+
+function App() {
+  return (
+    <>
+      <ReactIcon width={350} height={350} color="red" />
+    </>
+  );
+}
+
+export default App;
+```
+
+:::note
+
+- Để có thể custom **width**, **height**, **color** của một SVG, ta phải xóa thuộc tính **width**, **height** trong file `.svg` và thuộc tính `fill`,... phải có giá trị là `"currentColor"`
+  :::
 
 ## Sử dụng biến môi trường (environment variables) trong Vite
 
